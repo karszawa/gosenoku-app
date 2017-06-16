@@ -1,0 +1,3 @@
+rootProject.name = 'Gosenoku'
+
+include ':app'
