@@ -27,7 +27,7 @@ export function convertImg(img, callback) {
         alert(err);
         return;
       }
-      
+
       callback(img);
     })
 };

@@ -32,6 +32,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    return <Login />;
     return <Edit changeScene={ this.changeScene.bind(this) }/>;
 
     switch(this.state.scene) {

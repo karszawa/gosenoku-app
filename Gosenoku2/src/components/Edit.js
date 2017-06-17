@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
 import styled from 'styled-components/native';
 import { Container, Header, Left, Body, Title, Right, Content, Footer, FooterTab, Button, Icon, Input, Item } from 'native-base';
-// import * as ImagePicker from 'react-native-image-picker';
-// var ImagePicker = require('react-native-image-picker');
 import * as convertUtils from '../lib/convertUtils';
 import { ImagePicker } from 'expo';
 
