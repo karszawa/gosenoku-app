@@ -8,6 +8,11 @@ export function convertText(text, callback) {
     .send({ body: text })
     .set('Accept', 'application/json')
     .end((err, res) => {
+      if(err) {
+        alert(err);
+        return;
+      }
+
       callback(res.body);
     });
 }
@@ -18,6 +23,11 @@ export function convertImg(img, callback) {
     .send({ jpg: img })
     .set('Accept', 'application/json')
     .end((err, res) => {
+      if(err) {
+        alert(err);
+        return;
+      }
+      
       callback(img);
     })
 };

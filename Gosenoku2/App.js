@@ -11,12 +11,24 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      scene: 'loading'
+      scene: 'loading',
+      text: null,
+      img: null
     };
   }
 
   changeScene(nextScene) {
     this.setState({ scene: nextScene });
+  }
+
+  tweet(text, img, callback) {
+    this.setState({ text: text, img: img });
+
+    alert('tweet!: ' + text);
+  }
+
+  clearResources() {
+    this.setState({ text: null, img: null });
   }
 
   render() {
@@ -25,9 +37,9 @@ export default class App extends React.Component {
     switch(this.state.scene) {
       case 'loading': return <Loading changeScene={ this.changeScene.bind(this) }/>;
       case 'login': return <Login changeScene={ this.changeScene.bind(this) }/>;
-      case 'edit': return <Edit changeScene={ this.changeScene.bind(this) }/>;
+      case 'edit': return <Edit changeScene={ this.changeScene.bind(this) } tweet={ this.tweet.bind(this) }/>;
       case 'confirmation': return <Confirmation changeScene={ this.changeScene.bind(this) }/>;
-      case 'done': return <Done changeScene={ this.changeScene.bind(this) }/>;
+      case 'done': return <Done changeScene={ this.changeScene.bind(this) } text={this.state.text} img={this.state.img} />;
       default: return null;
     }
   }
