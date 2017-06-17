@@ -6,6 +6,8 @@ import Edit from './src/components/Edit';
 import Confirmation from './src/components/Confirmation';
 import Done from './src/components/Done';
 
+import Twitter from './src/lib/twitter';
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,11 @@ export default class App extends React.Component {
   tweet(text, img, callback) {
     this.setState({ text: text, img: img });
 
-    alert('tweet!: ' + text);
+    alert(text + img);
+
+    // Twitter.post(text, img);
+    //
+    // callback();
   }
 
   clearResources() {
@@ -32,7 +38,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <Login />;
     return <Edit changeScene={ this.changeScene.bind(this) }/>;
 
     switch(this.state.scene) {
