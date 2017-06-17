@@ -2,8 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
 import styled from 'styled-components/native';
 import { Container, Header, Left, Body, Title, Right, Content, Footer, FooterTab, Button, Icon, Input, Item } from 'native-base';
-// import ImagePicker from 'react-native-image-picker';
-var ImagePicker = require('react-native-image-picker');
+import * as ImagePicker from 'react-native-image-picker';
+// var ImagePicker = require('react-native-image-picker');
+import * as convertUtils from '../lib/convertUtils';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,6 +32,12 @@ export default class Edit extends React.Component {
       }
     };
 
+    this.setState({
+      imageSource: require('../../assets/images/red-bull.jpg')
+    });
+
+    return;
+
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
@@ -53,6 +60,16 @@ export default class Edit extends React.Component {
     });
   }
 
+  convertResources() {
+    convertUtils.convertText((text) => {
+      this.setState({ text: text });
+    });
+
+    convertUtils.convertImg((img) => {
+      this.setState({ img: img });
+    });
+  }
+
   render() {
     return (
       <Container>
@@ -69,7 +86,7 @@ export default class Edit extends React.Component {
             <Input placeholder='いまどうしてる？' style={{ height: 160, textAlignVertical: 'top', marginTop: 10 }} multiline={true}/>
           </Item>
 
-          { this.state.imageSource && <Image source={ this.state.imageSource} style={{ }} /> }
+          { this.state.imageSource && <Image source={ this.state.imageSource} style={{ width: '80%', height: '80%', borderRadius: 5, alignSelf: 'center', marginTop: 10 }} /> }
 
           <Button block light style={{ height: 100, marginTop: 10 }} onPress={ this.addImageButtonPressed.bind(this) }>
             <Text>{ this.state.imageSource ? 'もう一度とる' : '写真をとる' }</Text>
@@ -78,8 +95,14 @@ export default class Edit extends React.Component {
 
         <Footer>
           <FooterTab>
-            <Button full>
-              <Text>Post</Text>
+            <Button full onPress={ this.convertResources.bind(this) }>
+              <Text>Convert</Text>
+            </Button>
+          </FooterTab>
+
+          <FooterTab>
+            <Button full onPress={ this.convertResources.bind(this) }>
+              <Text>Tweet</Text>
             </Button>
           </FooterTab>
         </Footer>
