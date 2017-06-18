@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Image } from 'react-native';
 import { Header, Title, Footer, FooterTab, Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+import CustomHeader from './Header';
+
 
 export default class Done extends React.Component {
   onComplete() {
@@ -11,11 +13,7 @@ export default class Done extends React.Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>Sweet Tweet</Title>
-          </Body>
-        </Header>
+        <CustomHeader />
 
         <Content contentContainerStyle={{ flexDirection: 'column' }}>
           <Card style={{ marginTop: 5 }}>

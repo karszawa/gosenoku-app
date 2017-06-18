@@ -30,7 +30,7 @@ export default class App extends React.Component {
   tweet(text, img, callback) {
     this.setState({ text: text, img: img });
 
-    this.twitter.post(text, img);
+    // this.twitter.post(text + ' #spajam', img);
 
     callback();
   }

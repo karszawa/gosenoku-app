@@ -5,6 +5,7 @@ import { Container, Header, Left, Body, Title, Right, Content, Footer, FooterTab
 import * as convertUtils from '../lib/convertUtils';
 import { ImagePicker } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
+import CustomHeader from './Header';
 
 export default class Edit extends React.Component {
   constructor(props) {
@@ -68,13 +69,7 @@ export default class Edit extends React.Component {
   render() {
     return (
       <Container style={{ backgroundColor: 'white' }}>
-        <Header style={{ backgroundColor: '#5d4037' }}>
-          <Left />
-          <Body>
-            <Title style={{ color: 'white' }}>Sweet Tweet</Title>
-          </Body>
-          <Right />
-        </Header>
+        <CustomHeader />
 
         <Content contantContainerStyle={{ flexDirection: 'column', alignItems: 'center' }}>
           <Item underline>
@@ -92,6 +87,8 @@ export default class Edit extends React.Component {
             <Icon name="camera" style={{ fontSize: 35 }} />
             <Text style={{ fontSize: 20 }}>{ this.state.img ? 'もう一度とる' : '写真をとる' }</Text>
           </Button>
+
+          { !this.state.img && <Image source={require('../../assets/images/cake.jpg')} style={{ paddingTop: 200, width: 200, height: 200, alignSelf: 'center' }} /> }
         </Content>
 
         <Footer>
