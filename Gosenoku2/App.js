@@ -17,6 +17,10 @@ export default class App extends React.Component {
       text: null,
       img: null
     };
+
+    this.twitter = new Twitter();
+
+    this.twitter.post('ほよほよ', 'https://stat.ameba.jp/user_images/20170507/13/ringworldengineer/85/27/j/o0600069313931564356.jpg');
   }
 
   changeScene(nextScene) {
@@ -26,7 +30,7 @@ export default class App extends React.Component {
   tweet(text, img, callback) {
     this.setState({ text: text, img: img });
 
-    // Twitter.post(text, img);
+    this.twitter.post(text, img);
 
     callback();
   }

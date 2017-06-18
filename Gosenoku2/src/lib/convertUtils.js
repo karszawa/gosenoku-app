@@ -29,7 +29,7 @@ export async function convertImg(img, callback) {
     body: getBlobImg(img, 'file'),
     header: { 'content-type': 'multipart/form-data' }
   });
-  
+
   const path = JSON.parse(result._bodyInit).path
 
   console.log('GET(image): ' + `${BASE_URL}/${path.slice(16)}`);

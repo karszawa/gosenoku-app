@@ -3,7 +3,7 @@
 import request from 'superagent';
 import getBlobImg from './getBlobImg';
 
-const BASE_URL = 'https://api.gosen-oku-en.tokyo';
+const BASE_URL = 'https://api.gosen-oku-en.tokyo:8200';
 
 export default class Twitter {
   async post(text, img) {
@@ -13,12 +13,18 @@ export default class Twitter {
     }
 
     if(img.startsWith('https://')) {
-      const data = await fetch(url);
+      // const data = await fetch(img);
 
-      this.mediaUpdate(data, (media_id) => {
+      this.mediaUpdate(img, (media_id) => {
         this.statusesUpdate(text, media_id);
       });
     } else {
+      alert("画像が指定されてないよ！");
+
+      // this.mediaUpdate(getBlobImg(img), (media_id) => {
+      //   this.statusesUpdate(text, media_id);
+      // });
+
       // fs.readFile(img, (error, data) => {
       //   if(error) throw error;
       //
@@ -46,7 +52,7 @@ export default class Twitter {
       });
   }
 
-  async mediaUpdate(data, callback) {
+  async mediaUpdate(url, callback) {
     // this.client.post('media/upload', { media: data }, (error, tweet, response) => {
     //   if(error) throw error;
     //
@@ -56,11 +62,13 @@ export default class Twitter {
     //   callback(JSON.parse(response.body).media_id);
     // });
 
-    const result = await fetch(`${BASE_URL}/gosenoku_twitter/media_update`, {
+    const result = await fetch(`${BASE_URL}/gosenoku_twitter/media_update_by_url`, {
       method: 'POST',
-      body: getBlobImg(img, 'file'),
-      header: { 'content-type': 'multipart/form-data' }
+      body: { url: url },
+      header: { 'content-type': 'text/plain' }
     });
+
+    console.log('POST(mediaUpdate): ' + result.media_id);
 
     callback(result.media_id);
 
