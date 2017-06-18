@@ -7,9 +7,6 @@ import getBlobImg from './getBlobImg';
 const BASE_URL = 'https://api.gosen-oku-en.tokyo';
 
 export function convertText(text, callback) {
-  // callback(text + "hoge");
-  // return;
-
   request
     .post(`${BASE_URL}/gosenoku_text/text`)
     .send({ body: text })
