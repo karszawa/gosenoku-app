@@ -26,7 +26,7 @@
 
 ### System
 
-[Gosenoku System](./images/gosenoku-system.png)
+![Gosenoku System](./images/gosenoku-system.png)
 
 ### 苦労話
 
