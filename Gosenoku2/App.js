@@ -20,7 +20,7 @@ export default class App extends React.Component {
 
     this.twitter = new Twitter();
 
-    this.twitter.post('ほよほよ', 'https://stat.ameba.jp/user_images/20170507/13/ringworldengineer/85/27/j/o0600069313931564356.jpg');
+    // this.twitter.post('ほよほよ', 'https://stat.ameba.jp/user_images/20170507/13/ringworldengineer/85/27/j/o0600069313931564356.jpg');
   }
 
   changeScene(nextScene) {

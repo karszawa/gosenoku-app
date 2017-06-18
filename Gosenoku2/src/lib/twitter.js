@@ -3,7 +3,7 @@
 import request from 'superagent';
 import getBlobImg from './getBlobImg';
 
-const BASE_URL = 'https://api.gosen-oku-en.tokyo:8200';
+const BASE_URL = 'https://api.gosen-oku-en.tokyo';
 
 export default class Twitter {
   async post(text, img) {
@@ -41,6 +41,7 @@ export default class Twitter {
     //
     //   console.log(tweet)
     // });
+
     request
       .post(`${BASE_URL}/gosenoku_twitter/statuses_update`)
       .send({ status: text, media_ids: media_ids })
@@ -48,7 +49,7 @@ export default class Twitter {
       .end((error, res) => {
         if(error) throw error;
 
-        alert('Posted!');
+        alert('投稿完了!');
       });
   }
 
@@ -62,15 +63,22 @@ export default class Twitter {
     //   callback(JSON.parse(response.body).media_id);
     // });
 
-    const result = await fetch(`${BASE_URL}/gosenoku_twitter/media_update_by_url`, {
+    console.log(url);
+
+    const result = await fetch(`${BASE_URL}/gosenoku_twitter/media_upload_by_url`, {
       method: 'POST',
-      body: { url: url },
-      header: { 'content-type': 'text/plain' }
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ url: url })
     });
 
-    console.log('POST(mediaUpdate): ' + result.media_id);
+    console.log('POST(mediaUpdate): ' + result._bodyText);
 
-    callback(result.media_id);
+    if(result._bodyText) {
+      callback(result._bodyText);
+    }
 
     // request
     //   .post(`${BASE_URL}/gosenoku_twitter/media_update`)

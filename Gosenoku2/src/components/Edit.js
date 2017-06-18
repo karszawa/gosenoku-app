@@ -18,8 +18,8 @@ export default class Edit extends React.Component {
   }
 
   async addImageButtonPressed() {
-    // let result = await ImagePicker.launchCameraAsync({ aspect: [ 1, 1 ] });
-    let result = await ImagePicker.launchImageLibraryAsync({ aspect: [ 1, 1 ] });
+    let result = await ImagePicker.launchCameraAsync({ aspect: [ 1, 1 ] });
+    // let result = await ImagePicker.launchImageLibraryAsync({ aspect: [ 1, 1 ] });
 
     if(!result.cancelled) {
       this.setState({ img: result.uri });
@@ -67,11 +67,11 @@ export default class Edit extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Header>
+      <Container style={{ backgroundColor: 'white' }}>
+        <Header style={{ backgroundColor: '#5d4037' }}>
           <Left />
           <Body>
-            <Title>Sweet Tweet</Title>
+            <Title style={{ color: 'white' }}>Sweet Tweet</Title>
           </Body>
           <Right />
         </Header>
@@ -82,27 +82,30 @@ export default class Edit extends React.Component {
               placeholder='いまどうしてる？'
               onChangeText={ (text) => this.setState({ text: text }) }
               value={ this.state.text }
-              style={{ height: 160, textAlignVertical: 'top', marginTop: 10 }} multiline={true}
+              style={{ height: 160, textAlignVertical: 'top', marginTop: 10, backgroundColor: 'white' }} multiline={true}
             />
           </Item>
 
           { this.state.img && <Image source={{ uri: this.state.img }} style={{ width: '80%', height: '80%', borderRadius: 5, alignSelf: 'center', marginTop: 10 }} /> }
 
           <Button block light style={{ height: 100, marginTop: 10, borderRadius: 5 }} onPress={ this.addImageButtonPressed.bind(this) }>
-            <Text>{ this.state.img ? 'もう一度とる' : '写真をとる' }</Text>
+            <Icon name="camera" style={{ fontSize: 35 }} />
+            <Text style={{ fontSize: 20 }}>{ this.state.img ? 'もう一度とる' : '写真をとる' }</Text>
           </Button>
         </Content>
 
         <Footer>
           <FooterTab>
-            <Button full onPress={ this.convertResources.bind(this) }>
-              <Text>スイート</Text>
+            <Button full onPress={ this.convertResources.bind(this) } style={{ flexDirection: 'row', backgroundColor: '#E57373' }}>
+              <Icon name="ios-ice-cream-outline" style={{ fontSize: 25, color: 'white' }} />
+              <Text style={{ color: 'white' }}>スイート</Text>
             </Button>
           </FooterTab>
 
           <FooterTab>
-            <Button full onPress={ this.tweet.bind(this) }>
-              <Text>ツイート</Text>
+            <Button full onPress={ this.tweet.bind(this) } style={{ flexDirection: 'row', backgroundColor: '#6d4c41' }}>
+              <Icon name="md-send" style={{ fontSize: 25, color: 'white' }} />
+              <Text style={{ color: 'white' }}>ツイート</Text>
             </Button>
           </FooterTab>
         </Footer>
