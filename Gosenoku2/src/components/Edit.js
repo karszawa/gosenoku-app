@@ -4,15 +4,7 @@ import styled from 'styled-components/native';
 import { Container, Header, Left, Body, Title, Right, Content, Footer, FooterTab, Button, Icon, Input, Item } from 'native-base';
 import * as convertUtils from '../lib/convertUtils';
 import { ImagePicker } from 'expo';
-
-const styles = StyleSheet.create({
-  container: {
-    height: '50%',
-    width: '100%',
-    borderWidth: 1,
-    textAlignVertical: 'top'
-  }
-});
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class Edit extends React.Component {
   constructor(props) {
@@ -20,26 +12,46 @@ export default class Edit extends React.Component {
 
     this.state = {
       text: null,
-      img: null
+      img: null,
+      loadingCounter: 0
     };
   }
 
   async addImageButtonPressed() {
-    let result = await ImagePicker.launchCameraAsync({ aspect: [ 1, 1 ] });
+    // let result = await ImagePicker.launchCameraAsync({ aspect: [ 1, 1 ] });
+    let result = await ImagePicker.launchImageLibraryAsync({ aspect: [ 1, 1 ] });
 
     if(!result.cancelled) {
       this.setState({ img: result.uri });
     }
   }
 
-  convertResources() {
-    convertUtils.convertText((text) => {
-      this.setState({ text: text });
-    });
+  increaseCounter(d) {
+    this.setState({ loadingCounter: this.state.loadingCounter + d });
+  }
 
-    convertUtils.convertImg((img) => {
-      this.setState({ img: img });
-    });
+  completedSomeResource() {
+    const counter = this.state.loadingCounter;
+
+    this.setState({ loadingCounter: this.state.loadingCounter - 1 });
+  }
+
+  convertResources() {
+    this.increaseCounter((this.state.text ? 1 : 0) + (this.state.img ? 1 : 0));
+
+    if(this.state.text) {
+      convertUtils.convertText(this.state.text, (newText) => {
+        this.setState({ text: newText });
+        this.completedSomeResource();
+      });
+    }
+
+    if(this.state.img) {
+      convertUtils.convertImg(this.state.img, (newImg) => {
+        this.setState({ img: newImg });
+        this.completedSomeResource();
+      });
+    }
   }
 
   tweet() {
@@ -49,7 +61,7 @@ export default class Edit extends React.Component {
     }
 
     this.props.tweet(this.state.text, this.state.img, () => {
-      this.changeScene('done');
+      this.props.changeScene('done');
     });
   }
 
@@ -66,7 +78,12 @@ export default class Edit extends React.Component {
 
         <Content contantContainerStyle={{ flexDirection: 'column', alignItems: 'center' }}>
           <Item underline>
-            <Input placeholder='いまどうしてる？' style={{ height: 160, textAlignVertical: 'top', marginTop: 10 }} multiline={true}/>
+            <Input
+              placeholder='いまどうしてる？'
+              onChangeText={ (text) => this.setState({ text: text }) }
+              value={ this.state.text }
+              style={{ height: 160, textAlignVertical: 'top', marginTop: 10 }} multiline={true}
+            />
           </Item>
 
           { this.state.img && <Image source={{ uri: this.state.img }} style={{ width: '80%', height: '80%', borderRadius: 5, alignSelf: 'center', marginTop: 10 }} /> }
@@ -89,6 +106,8 @@ export default class Edit extends React.Component {
             </Button>
           </FooterTab>
         </Footer>
+
+        <Spinner visible={this.state.loadingCounter > 0} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
       </Container>
     );
   }

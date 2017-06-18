@@ -13,7 +13,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      scene: 'loading',
+      scene: 'edit',
       text: null,
       img: null
     };
@@ -26,11 +26,9 @@ export default class App extends React.Component {
   tweet(text, img, callback) {
     this.setState({ text: text, img: img });
 
-    alert(text + img);
-
     // Twitter.post(text, img);
-    //
-    // callback();
+
+    callback();
   }
 
   clearResources() {
@@ -38,14 +36,15 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <Edit changeScene={ this.changeScene.bind(this) }/>;
+    // return <Done text="今日は初の台湾まぜそばを食べた" img="https://pbs.twimg.com/profile_images/875864983480827904/6IGeT-pc_400x400.jpg" />
+      // return <Edit changeScene={ this.changeScene.bind(this) }/>;
 
-    switch(this.state.scene) {
-      case 'loading': return <Loading changeScene={ this.changeScene.bind(this) }/>;
-      case 'login': return <Login changeScene={ this.changeScene.bind(this) }/>;
-      case 'edit': return <Edit changeScene={ this.changeScene.bind(this) } tweet={ this.tweet.bind(this) }/>;
-      case 'confirmation': return <Confirmation changeScene={ this.changeScene.bind(this) }/>;
-      case 'done': return <Done changeScene={ this.changeScene.bind(this) } text={this.state.text} img={this.state.img} />;
+      switch(this.state.scene) {
+        case 'loading': return <Loading changeScene={ this.changeScene.bind(this) }/>;
+        case 'login': return <Login changeScene={ this.changeScene.bind(this) }/>;
+        case 'edit': return <Edit changeScene={ this.changeScene.bind(this) } tweet={ this.tweet.bind(this) }/>;
+        case 'confirmation': return <Confirmation changeScene={ this.changeScene.bind(this) }/>;
+        case 'done': return <Done changeScene={ this.changeScene.bind(this) } clearResources={ this.clearResources.bind(this) } text={this.state.text} img={this.state.img} />;
       default: return null;
     }
   }
