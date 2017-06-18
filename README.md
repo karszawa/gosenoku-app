@@ -28,6 +28,8 @@
 
 ![Gosenoku System](./images/gosenoku-system.png)
 
+![Displays](./images/displays.png)
+
 ### 苦労話
 
 - ReactNativeでネイティブっぽいことをやるとすぐ詰む
